@@ -10,7 +10,91 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+
+                <ResourceDictionary Source="MaterialDesignDefaults.xaml"></ResourceDictionary>
+
             </ResourceDictionary.MergedDictionaries>
+
+            <Color x:Key="MaterialDesignGrayColor">#535353</Color>
+             <SolidColorBrush x:Key="MaterialDesignGrayBrush" Color="{DynamicResource MaterialDesignGrayColor}"></SolidColorBrush>
+             
+             <Color x:Key="NeonPink">#FF2947B4</Color>
+             <SolidColorBrush Color="{DynamicResource NeonPink}" x:Key="NeonPinkBrush"></SolidColorBrush>
+
+             <Color x:Key="NeonLightPink">#FFFF9494</Color>
+             <SolidColorBrush Color="{DynamicResource NeonLightPink}" x:Key="NeonLightPinkBrush"></SolidColorBrush>
+
+             <Color x:Key="NeonDarkPink">#FFEE64F6</Color>
+             <SolidColorBrush Color="{DynamicResource NeonDarkPink}" x:Key="NeonDarkPinkBrush"></SolidColorBrush>
+
+             <Color x:Key="NeonBlue">#FF2196F3</Color>
+             <SolidColorBrush Color="{DynamicResource NeonBlue}" x:Key="NeonBlueBrush"></SolidColorBrush>
+
+             <Color x:Key="NeonWhite">#FFEFF3F6</Color>
+             <SolidColorBrush Color="{StaticResource NeonWhite}" x:Key="NeonWhiteBrush"></SolidColorBrush>
+
+             <Color x:Key="NeonSmoke">#FFF5F8FD</Color>
+             <SolidColorBrush Color="{StaticResource NeonSmoke}" x:Key="NeonSmokeBrush"></SolidColorBrush>
+
+             <Color x:Key="NeonLightBlue">#FF8BFFF4</Color>
+             <SolidColorBrush Color="{DynamicResource NeonPink}" x:Key="NeonLightBlueBrush"></SolidColorBrush>
+
+             <Color x:Key="NeonDarkBlue">#FF9164FF</Color>
+             <SolidColorBrush Color="{DynamicResource NeonPink}" x:Key="NeonDarkBlueBrush"></SolidColorBrush>
+
+             <Color x:Key="NeonReddish">#FFFF0FE3</Color>
+             <SolidColorBrush Color="{DynamicResource NeonReddish}" x:Key="NeonReddishBrush"></SolidColorBrush>
+
+             <Color x:Key="NeonOrange">#FFFBB672</Color>
+             <SolidColorBrush Color="{DynamicResource NeonOrange}" x:Key="NeonOrangeBrush"></SolidColorBrush>
+
+             <Color x:Key="NeonGreen">#FF5CD2B9</Color>
+             <SolidColorBrush Color="{DynamicResource NeonGreen}" x:Key="NeonGreenBrush"></SolidColorBrush>
+
+             <Color x:Key="NeonLightGreen">#FF95EE94</Color>
+             <SolidColorBrush Color="{DynamicResource NeonLightGreen}" x:Key="NeonLightGreenBrush"></SolidColorBrush>
+
+
+             <LinearGradientBrush EndPoint="1,0" StartPoint="0,1" x:Key="NeonGradient">
+                 <GradientStop Color="{StaticResource NeonBlue}" Offset="0"/>
+                 <GradientStop Color="{StaticResource NeonPink}" Offset="1"/>
+             </LinearGradientBrush>
+
+             <LinearGradientBrush EndPoint="1,0" StartPoint="0,1" Opacity="0.6" x:Key="NeonLightGradient">
+                 <GradientStop Color="{StaticResource NeonBlue}" Offset="0"/>
+                 <GradientStop Color="{StaticResource NeonPink}" Offset="1"/>
+             </LinearGradientBrush>
+
+             <LinearGradientBrush EndPoint="0,1" StartPoint="0.7,0" x:Key="NeonWhiteGradient">
+                 <GradientStop Color="#FFEFF3F6" Offset="0"/>
+                 <GradientStop Color="#FFF5F8FD" Offset="1"/>
+             </LinearGradientBrush>
+
+             <LinearGradientBrush EndPoint="0,1" StartPoint="0.7,0" x:Key="NeonPinkGradient">
+                 <GradientStop Color="{StaticResource NeonLightPink}" Offset="0"/>
+                 <GradientStop Color="{StaticResource NeonDarkPink}" Offset="1"/>
+             </LinearGradientBrush>
+
+             <LinearGradientBrush EndPoint="0,1" StartPoint="0.7,0" x:Key="NeonPinkBlueGradient">
+                 <GradientStop Color="{StaticResource NeonBlue}" Offset="0"/>
+                 <GradientStop Color="{StaticResource NeonDarkPink}" Offset="1"/>
+             </LinearGradientBrush>
+
+             <LinearGradientBrush EndPoint="0,1" StartPoint="0.7,0" x:Key="NeonAllBlueGradient">
+                 <GradientStop Color="{StaticResource NeonBlue}" Offset="0"/>
+                 <GradientStop Color="{StaticResource NeonDarkBlue}" Offset="1"/>
+             </LinearGradientBrush>
+
+             <LinearGradientBrush EndPoint="0,1" StartPoint="0.7,0" x:Key="NeonReddishGradient">
+                 <GradientStop Color="{StaticResource NeonReddish}" Offset="0"/>
+                 <GradientStop Color="{StaticResource NeonOrange}" Offset="1"/>
+             </LinearGradientBrush>
+
+             <LinearGradientBrush EndPoint="0,1" StartPoint="0.7,0" x:Key="NeonGreenGradient">
+                 <GradientStop Color="{StaticResource NeonGreen}" Offset="0"/>
+                 <GradientStop Color="{StaticResource NeonLightGreen}" Offset="1"/>
+             </LinearGradientBrush>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

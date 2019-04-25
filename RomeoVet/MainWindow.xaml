@@ -12,8 +12,60 @@
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignDarkBackground}"
-        FontFamily="{DynamicResource MaterialDesignFont}" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+        FontFamily="{DynamicResource MaterialDesignFont}" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Width="1280" Height="720">
     <Grid>
-        
+        <DockPanel>
+            <Menu DockPanel.Dock="Top" >
+                <Grid>
+                    <materialDesign:PackIcon Kind="Cat" Width="30" Height="30" 
+                                             
+                                             Background="DodgerBlue"  Foreground="FloralWhite"></materialDesign:PackIcon>
+                </Grid>
+                <MenuItem Header="File"></MenuItem>
+                <MenuItem Header="Edit"></MenuItem>
+                <MenuItem Header="View"></MenuItem>
+                <MenuItem Header="Help"></MenuItem>
+            </Menu>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="300" MinWidth="300" MaxWidth="500"/>
+                </Grid.ColumnDefinitions>
+                <Grid>
+                    
+                </Grid>
+                <GridSplitter Grid.Column="0" HorizontalAlignment="Right" Width="5" ShowsPreview="True" ResizeDirection="Columns"></GridSplitter>
+                <Grid MinWidth="300" Grid.Column="1">
+                    <Border HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10"
+                            Background="{StaticResource MaterialDesignGrayBrush}"
+                            BorderBrush="{StaticResource MaterialDesignDarkBackground}"
+                            BorderThickness="0,0,0,2"
+                            >
+                        <TextBlock Text="Anatomy Explorer"></TextBlock>
+                    </Border>
+                    <Grid Margin="0,38,0,0" Background="{StaticResource MaterialDesignGrayBrush}">
+                        <ToolBar VerticalAlignment="Top" Background="{x:Null}">
+                            <ToggleButton Style="{StaticResource MaterialDesignFlatToggleButton}" Margin="5" 
+                                          Foreground="{StaticResource NeonReddishGradient}" Width="30" Height="30">
+                                <materialDesign:PackIcon Kind="Cat"></materialDesign:PackIcon>
+                            </ToggleButton>
+                            
+                            <ToggleButton Style="{StaticResource MaterialDesignFlatToggleButton}" Margin="5" 
+                                          Foreground="{StaticResource NeonReddishGradient}" Width="30" Height="30">
+                                <materialDesign:PackIcon Kind="Bone"></materialDesign:PackIcon>
+                            </ToggleButton>
+
+                            <ToggleButton Style="{StaticResource MaterialDesignFlatToggleButton}" Margin="5" 
+                                          Foreground="{StaticResource NeonReddishGradient}" Width="30" Height="30">
+                                <materialDesign:PackIcon Kind="Heart"></materialDesign:PackIcon>
+                            </ToggleButton>
+
+                        </ToolBar>
+                    </Grid>
+                </Grid>
+            </Grid>
+
+
+        </DockPanel>
     </Grid>
 </Window>
