@@ -4,45 +4,83 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RomeoVet.Controls"
-             xmlns:h="http://helix-toolkit.org/wpf"
+             xmlns:h="http://helix-toolkit.org/wpf/SharpDX"
              xmlns:viewModels="clr-namespace:RomeoVet.ViewModels"
              mc:Ignorable="d" 
-             Background="{StaticResource MaterialDesignDarkBackground}"
-             d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance viewModels:AnatomyDisplayViewModel}">
+             d:DesignHeight="400" d:DesignWidth="800" d:DataContext="{d:DesignInstance viewModels:AnatomyDisplayViewModel}">
     <UserControl.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="ViewportStyles.xaml"></ResourceDictionary>
-            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <h:HelixViewport3D IsEnabled="{Binding IsIdle}"
+
+        <h:Viewport3DX
+            Name="_Viewport"
+            BackgroundColor="#303030"
+            ShowViewCube="True" EnableDesignModeRendering="True"
+            IsEnabled="{Binding IsIdle}"
+            IsShadowMappingEnabled="True"
+            UseDefaultGestures="False"
             ZoomExtentsWhenLoaded="True" RotateCursor="None"
-            ZoomAroundMouseDownPoint="False" RotateAroundMouseDownPoint="False"
-            ViewCubeHeight="80" ViewCubeWidth="80" ViewCubeVerticalPosition="Top">
-            <h:HelixViewport3D.PanGesture>
-                <MouseGesture MouseAction="RightClick"></MouseGesture>
-            </h:HelixViewport3D.PanGesture>
-            <h:HelixViewport3D.RotateGesture>
-                <MouseGesture MouseAction="LeftClick"></MouseGesture>
-            </h:HelixViewport3D.RotateGesture>
+            ZoomAroundMouseDownPoint="False" RotateAroundMouseDownPoint="True" FXAALevel="High" CoordinateSystemLabelY="Z" CoordinateSystemLabelZ="Y">
+            <h:Viewport3DX.Camera>
+                <h:PerspectiveCamera UpDirection="0,1,0" FarPlaneDistance="40"/>
+            </h:Viewport3DX.Camera>
+            <h:Viewport3DX.EffectsManager>
+                <h:DefaultEffectsManager></h:DefaultEffectsManager>
+            </h:Viewport3DX.EffectsManager>
+            <h:Viewport3DX.InputBindings>
+                <KeyBinding Key="B" Command="h:ViewportCommands.BackView" />
+                <KeyBinding Key="F" Command="h:ViewportCommands.FrontView" />
+                <KeyBinding Key="U" Command="h:ViewportCommands.TopView" />
+                <KeyBinding Key="D" Command="h:ViewportCommands.BottomView" />
+                <KeyBinding Key="L" Command="h:ViewportCommands.LeftView" />
+                <KeyBinding Key="R" Command="h:ViewportCommands.RightView" />
+                <KeyBinding Command="h:ViewportCommands.ZoomExtents" Gesture="Control+E" />
+                <MouseBinding Command="h:ViewportCommands.Rotate" Gesture="LeftClick" />
+                <MouseBinding Command="h:ViewportCommands.Zoom" Gesture="MiddleClick" />
+                <MouseBinding Command="h:ViewportCommands.Pan" Gesture="RightClick" />
+            </h:Viewport3DX.InputBindings>
+            
+            
+            <h:ShadowMap3D OrthoWidth="300" />
+            <h:AmbientLight3D Color="#414141" />
+            <h:DirectionalLight3D Direction="50, -200, -100" />
 
-            <!--  Remember to add light to the scene  -->
-            <h:SunLight />
+            <h:MeshGeometryModel3D Geometry="{Binding Model}" x:Name="_MainModel" RenderWireframe="True">
+                <h:MeshGeometryModel3D.Material>
+                    <h:DiffuseMaterial DiffuseColor="Brown">
+                    </h:DiffuseMaterial>
+                </h:MeshGeometryModel3D.Material>
+                <h:MeshGeometryModel3D.Transform>
+                    <Transform3DGroup>
+                        <RotateTransform3D>
+                            <RotateTransform3D.Rotation>
+                                <AxisAngleRotation3D Angle="-90">
+                                    <AxisAngleRotation3D.Axis>
+                                        <Vector3D X="1" Y="0" Z="0"></Vector3D>
+                                    </AxisAngleRotation3D.Axis>
+                                </AxisAngleRotation3D>
+                            </RotateTransform3D.Rotation>
+                        </RotateTransform3D>
+                        <RotateTransform3D>
+                            <RotateTransform3D.Rotation>
+                                <AxisAngleRotation3D Angle="-90">
+                                    <AxisAngleRotation3D.Axis>
+                                        <Vector3D X="0" Y="1" Z="0"></Vector3D>
+                                    </AxisAngleRotation3D.Axis>
+                                </AxisAngleRotation3D>
+                            </RotateTransform3D.Rotation>
+                        </RotateTransform3D>
+                    </Transform3DGroup>
+                </h:MeshGeometryModel3D.Transform>
+            </h:MeshGeometryModel3D>
 
-            <!--  The content of this visual is defined in MainViewModel.cs  -->
-            <ModelVisual3D Content="{Binding Model}" />
+            <h:AxisPlaneGridModel3D
+                UpAxis="Y"
+                AutoSpacing="false" GridColor="#FF666666" PlaneColor="#FF303030" GridPattern="Grid" GridThickness="0.03" GridSpacing="5" RenderShadowMap="True" />
 
-            <!--  You can also add elements here in the xaml  -->
-            <h:GridLinesVisual3D
-                Width="8" 
-                Length="8"
-                MajorDistance="1"
-                MinorDistance="1"
-                Thickness="0.01" Fill="#7F767676" />
-
-        </h:HelixViewport3D>
+        </h:Viewport3DX>
         
         <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}"
                      Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"

@@ -6,20 +6,22 @@
         xmlns:local="clr-namespace:RomeoVet"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:h="http://helix-toolkit.org/wpf"
         xmlns:controls="clr-namespace:RomeoVet.Controls"
+        xmlns:hx="http://helix-toolkit.org/wpf/SharpDX"
         TextElement.Foreground="{DynamicResource MaterialDesignDarkForeground}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignDarkBackground}"
-        FontFamily="{DynamicResource MaterialDesignFont}" WindowStartupLocation="CenterScreen" 
+        FontFamily="{DynamicResource MaterialDesignFont}" 
+        WindowStartupLocation="CenterScreen" WindowState="Maximized"
         Loaded="MainWindow_OnLoaded"
         MinWidth="1280" MinHeight="720"
         Width="1280" Height="720">
     <Grid>
         <DockPanel>
+            
             <Menu DockPanel.Dock="Top" >
                 <Grid>
                     <materialDesign:PackIcon Kind="Cat" Width="30" Height="30" 
@@ -37,7 +39,10 @@
                     <ColumnDefinition Width="300" MinWidth="300" MaxWidth="500"/>
                 </Grid.ColumnDefinitions>
                 <Grid>
-                    <controls:AnatomyDisplay DataContext="{Binding Source={StaticResource AnatomyDisplayVMLocator}, Path=MainVM}"></controls:AnatomyDisplay>
+                    <controls:AnatomyDisplay
+                        x:Name="_AnatomyDisplay"
+                        DataContext="{Binding Source={StaticResource AnatomyDisplayVMLocator}, Path=MainVM}"></controls:AnatomyDisplay>
+                    
                 </Grid>
                 <GridSplitter Grid.Column="0" HorizontalAlignment="Right" Width="5" ShowsPreview="True" ResizeDirection="Columns"></GridSplitter>
                 <Grid MinWidth="300" Grid.Column="1">

@@ -29,9 +29,10 @@ namespace RomeoVet
 
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
-            PerformanceMeshProvider b = new PerformanceMeshProvider();
-
+            //IMeshProvider b = new PerformanceMeshProvider();
+            IMeshProvider b = new FileMeshProvider();
             App.VMLocator<AnatomyDisplayVMLocator>().LoadModel(b);
+
         }
     }
 }
