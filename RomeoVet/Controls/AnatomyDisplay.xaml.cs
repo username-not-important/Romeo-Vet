@@ -12,26 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using RomeoVet.Mesh;
-using RomeoVet.ViewModels.Locators;
 
-namespace RomeoVet
+namespace RomeoVet.Controls
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for AnatomyDisplay.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class AnatomyDisplay : UserControl
     {
-        public MainWindow()
+        public AnatomyDisplay()
         {
             InitializeComponent();
-        }
-
-        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            PerformanceMeshProvider b = new PerformanceMeshProvider();
-
-            App.VMLocator<AnatomyDisplayVMLocator>().LoadModel(b);
         }
     }
 }

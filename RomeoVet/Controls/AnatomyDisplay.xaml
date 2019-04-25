@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="RomeoVet.Controls.AnatomyDisplay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RomeoVet.Controls"
+             xmlns:h="http://helix-toolkit.org/wpf"
+             xmlns:viewModels="clr-namespace:RomeoVet.ViewModels"
+             mc:Ignorable="d" 
+             Background="{StaticResource MaterialDesignDarkBackground}"
+             d:DesignHeight="450" d:DesignWidth="800" d:DataContext="{d:DesignInstance viewModels:AnatomyDisplayViewModel}">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ViewportStyles.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <h:HelixViewport3D IsEnabled="{Binding IsIdle}"
+            ZoomExtentsWhenLoaded="True" RotateCursor="None"
+            ZoomAroundMouseDownPoint="False" RotateAroundMouseDownPoint="False"
+            ViewCubeHeight="80" ViewCubeWidth="80" ViewCubeVerticalPosition="Top">
+            <h:HelixViewport3D.PanGesture>
+                <MouseGesture MouseAction="RightClick"></MouseGesture>
+            </h:HelixViewport3D.PanGesture>
+            <h:HelixViewport3D.RotateGesture>
+                <MouseGesture MouseAction="LeftClick"></MouseGesture>
+            </h:HelixViewport3D.RotateGesture>
+
+            <!--  Remember to add light to the scene  -->
+            <h:SunLight />
+
+            <!--  The content of this visual is defined in MainViewModel.cs  -->
+            <ModelVisual3D Content="{Binding Model}" />
+
+            <!--  You can also add elements here in the xaml  -->
+            <h:GridLinesVisual3D
+                Width="8" 
+                Length="8"
+                MajorDistance="1"
+                MinorDistance="1"
+                Thickness="0.01" Fill="#7F767676" />
+
+        </h:HelixViewport3D>
+        
+        <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}"
+                     Visibility="{Binding IsBusy, Converter={StaticResource BooleanToVisibilityConverter}}"
+                     Width="45" Height="45" IsIndeterminate="True"></ProgressBar>
+    </Grid>
+</UserControl>

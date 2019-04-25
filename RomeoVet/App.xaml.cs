@@ -13,5 +13,16 @@ namespace RomeoVet
     /// </summary>
     public partial class App : Application
     {
+        public static T VMLocator<T>()
+        {
+            string type = typeof(T).Name.Replace("ViewModel", "VM");
+
+            return (T)Current.Resources[type];
+        }
+
+        public static T FindResource<T>(string v)
+        {
+            return (T)Current.Resources[v];
+        }
     }
 }

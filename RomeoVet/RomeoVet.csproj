@@ -103,6 +103,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Mesh\IMeshProvider.cs" />
+    <Compile Include="Mesh\TestMeshProvider.cs" />
+    <Compile Include="Models\AnatomyDisplayModel.cs" />
+    <Compile Include="Util\TypeHelper.cs" />
+    <Compile Include="ViewModels\AnatomyDisplayViewModel.cs" />
+    <Compile Include="ViewModels\Common\AsynchronusViewModel.cs" />
+    <Compile Include="ViewModels\Locators\AnatomyDisplayVMLocator.cs" />
+    <Page Include="Controls\AnatomyDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ViewportStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -110,6 +125,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\AnatomyDisplay.xaml.cs">
+      <DependentUpon>AnatomyDisplay.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -147,5 +165,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
