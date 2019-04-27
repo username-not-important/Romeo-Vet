@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:RomeoVet.Controls"
+             xmlns:hx2D="clr-namespace:HelixToolkit.Wpf.SharpDX.Elements2D;assembly=HelixToolkit.Wpf.SharpDX"
              xmlns:h="http://helix-toolkit.org/wpf/SharpDX"
              xmlns:viewModels="clr-namespace:RomeoVet.ViewModels"
              mc:Ignorable="d" 
@@ -42,15 +43,14 @@
                 <MouseBinding Command="h:ViewportCommands.Pan" Gesture="RightClick" />
             </h:Viewport3DX.InputBindings>
             
-            
             <h:ShadowMap3D OrthoWidth="300" />
             <h:AmbientLight3D Color="#414141" />
             <h:DirectionalLight3D Direction="50, -200, -100" />
 
-            <h:MeshGeometryModel3D Geometry="{Binding Model}" x:Name="_MainModel" RenderWireframe="True">
+            <!-- Skeleton Model -->
+            <h:MeshGeometryModel3D Geometry="{Binding Model}" x:Name="_SkeletonModel" CullMode="Back">
                 <h:MeshGeometryModel3D.Material>
-                    <h:DiffuseMaterial DiffuseColor="Brown">
-                    </h:DiffuseMaterial>
+                    <h:DiffuseMaterial DiffuseColor="#FF606060" ></h:DiffuseMaterial>
                 </h:MeshGeometryModel3D.Material>
                 <h:MeshGeometryModel3D.Transform>
                     <Transform3DGroup>

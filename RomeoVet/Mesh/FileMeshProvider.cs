@@ -19,7 +19,7 @@ namespace RomeoVet.Mesh
         {
             Importer i = new Importer();
 
-            var scene = i.Load(Environment.CurrentDirectory + "\\NHorse.3ds");
+            var scene = i.Load(Environment.CurrentDirectory + "\\horse.3ds");
 
             var list = new List<Object3D>();
             foreach (var node in scene.Root.Traverse())

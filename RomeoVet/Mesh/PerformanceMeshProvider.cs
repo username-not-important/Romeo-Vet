@@ -16,7 +16,6 @@ namespace RomeoVet.Mesh
         
         Geometry3D BuildMesh()
         {
-
             // scene model3d
             var b1 = new MeshBuilder();
             b1.AddSphere(new Vector3(0, 0, 0), 0.5);

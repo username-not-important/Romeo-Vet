@@ -21,8 +21,9 @@
         Width="1280" Height="720">
     <Grid>
         <DockPanel>
-            
-            <Menu DockPanel.Dock="Top" >
+
+            <Menu DockPanel.Dock="Top" 
+                  Background="{StaticResource MaterialDesignGrayBrush}">
                 <Grid>
                     <materialDesign:PackIcon Kind="Cat" Width="30" Height="30" 
                                              
@@ -45,7 +46,7 @@
                     
                 </Grid>
                 <GridSplitter Grid.Column="0" HorizontalAlignment="Right" Width="5" ShowsPreview="True" ResizeDirection="Columns"></GridSplitter>
-                <Grid MinWidth="300" Grid.Column="1">
+                <Grid MinWidth="300" Margin="0,5,0,0"  Grid.Column="1">
                     <Border HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10"
                             Background="{StaticResource MaterialDesignGrayBrush}"
                             BorderBrush="{StaticResource MaterialDesignDarkBackground}"
