@@ -108,10 +108,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\FringeConverter.cs" />
     <Compile Include="Mesh\FileMeshProvider.cs" />
     <Compile Include="Mesh\IMeshProvider.cs" />
     <Compile Include="Mesh\PerformanceMeshProvider.cs" />
+    <Compile Include="Mesh\Batch.cs" />
     <Compile Include="Models\AnatomyDisplayModel.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Util\GeometryHelper.cs" />
     <Compile Include="Util\TypeHelper.cs" />
     <Compile Include="ViewModels\AnatomyDisplayViewModel.cs" />

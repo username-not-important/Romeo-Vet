@@ -10,6 +10,6 @@ namespace RomeoVet.Mesh
 {
     public interface IMeshProvider
     {
-        Object3D BuildModel();
+        Batch BuildModel();
     }
 }

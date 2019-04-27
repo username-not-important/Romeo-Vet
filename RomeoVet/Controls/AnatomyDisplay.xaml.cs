@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,8 +15,12 @@ using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Assisticant;
+using Assisticant.Collections;
+using HelixToolkit.Wpf.SharpDX;
 using RomeoVet.Util;
 using RomeoVet.ViewModels;
+using SharpDX;
+using Material = HelixToolkit.Wpf.SharpDX.Material;
 
 namespace RomeoVet.Controls
 {
@@ -46,9 +51,42 @@ namespace RomeoVet.Controls
         {
             Dispatcher.Invoke(() =>
             {
-                _Viewport.SetView(new Point3D(-7.5, 13.7, 11), new Vector3D(11, -11, -11), new Vector3D(0, 1, 0), 1000);
+
+                var vm = ForView.Unwrap<AnatomyDisplayViewModel>(DataContext);
+                batchedMesh.BatchedGeometries = new List<BatchedMeshGeometryConfig>(vm.SkeletonBatch);
+                batchedMesh.BatchedMaterials = new List<Material>(vm.MaterialBatch);
+
+                _Viewport.SetView(new Point3D(-7.5, 15, 11), new Vector3D(11, -11, -11), new Vector3D(0, 1, 0), 1000);
+                //_Viewport.ZoomExtents();
             });
 
+        }
+
+        DateTime lastHit = DateTime.Now;
+        private void Skeleton_Mouse3DUp(object sender, MouseUp3DEventArgs e)
+        {
+            if (DateTime.Now.Subtract(lastHit).TotalMilliseconds > 400)
+            {
+                lastHit = DateTime.Now;
+                return;
+            }
+
+            var dc = ForView.Unwrap<AnatomyDisplayViewModel>(DataContext);
+
+            if (dc.SelectedMesh == e.HitTestResult.Geometry)
+                dc.SelectedMesh = null;
+            else
+            {
+                dc.SelectedMesh = e.HitTestResult.Geometry;
+                
+                _Viewport.ZoomExtents(e.HitTestResult.PointHit.ToPoint3D(), 1, 350);
+            }
+
+        }
+
+        private Rect3D ToRect3D(BoundingBox b)
+        {
+            return new Rect3D(b.Minimum.X, b.Minimum.Y, b.Minimum.Z, b.Size.X, b.Size.Y, b.Size.Z);
         }
     }
 }

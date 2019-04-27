@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Media3D;
@@ -8,6 +11,7 @@ using Assisticant;
 using Assisticant.Fields;
 using HelixToolkit.Wpf.SharpDX;
 using HelixToolkit.Wpf.SharpDX.Model;
+using RomeoVet.Annotations;
 using RomeoVet.Mesh;
 using RomeoVet.Models;
 using RomeoVet.ViewModels.Common;
@@ -26,8 +30,18 @@ namespace RomeoVet.ViewModels
             _display = display;
         }
 
-        public Geometry3D Model => _display.Mesh;
-        public MaterialCore Material => _display.Material;
+        public IList<BatchedMeshGeometryConfig> SkeletonBatch => _display.SkeletonBatch;
+        public IList<Material> MaterialBatch => _display.MaterialBatch;
+
+        public Geometry3D SelectedMesh
+        {
+            get { return _display.SelectedMesh; }
+            set { _display.SelectedMesh = value; }
+        }
+        public Material MainSkeletonMaterial => _display.MainSkeletonMaterial;
+        public Material SelectedMaterial => _display.SelectedMaterial;
+
+        public Transform3D BatchedTransform => _display.BatchedTransform;
 
         public event EventHandler ModelChanged;
         
@@ -37,12 +51,10 @@ namespace RomeoVet.ViewModels
             {
                 await Task.Run(() =>
                 {
-                    var model = provider.BuildModel();
-                    //mesh.Freeze();
+                    var batch = provider.BuildModel();
 
-                    _display.Mesh = model.Geometry;
-                    _display.Material = model.Material;
-
+                    _display.ImportBatch(batch);
+                    
                     OnModelChanged();
                 });
 
@@ -53,5 +65,6 @@ namespace RomeoVet.ViewModels
         {
             ModelChanged?.Invoke(this, EventArgs.Empty);
         }
+        
     }
 }

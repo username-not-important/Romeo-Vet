@@ -7,10 +7,12 @@
              xmlns:hx2D="clr-namespace:HelixToolkit.Wpf.SharpDX.Elements2D;assembly=HelixToolkit.Wpf.SharpDX"
              xmlns:h="http://helix-toolkit.org/wpf/SharpDX"
              xmlns:viewModels="clr-namespace:RomeoVet.ViewModels"
+             xmlns:converters="clr-namespace:RomeoVet.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="800" d:DataContext="{d:DesignInstance viewModels:AnatomyDisplayViewModel}">
     <UserControl.Resources>
         <ResourceDictionary>
+            <converters:FringeConverter x:Key="FringeConverter"></converters:FringeConverter>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -21,11 +23,11 @@
             ShowViewCube="True" EnableDesignModeRendering="True"
             IsEnabled="{Binding IsIdle}"
             IsShadowMappingEnabled="True"
-            UseDefaultGestures="False"
+            UseDefaultGestures="False" 
             ZoomExtentsWhenLoaded="True" RotateCursor="None"
-            ZoomAroundMouseDownPoint="False" RotateAroundMouseDownPoint="True" FXAALevel="High" CoordinateSystemLabelY="Z" CoordinateSystemLabelZ="Y">
+            ZoomAroundMouseDownPoint="False" RotateAroundMouseDownPoint="True" FXAALevel="High" CoordinateSystemLabelY="Z" CoordinateSystemLabelZ="Y" MSAA="Two">
             <h:Viewport3DX.Camera>
-                <h:PerspectiveCamera UpDirection="0,1,0" FarPlaneDistance="40"/>
+                <h:PerspectiveCamera UpDirection="0,1,0" FarPlaneDistance="4000"/>
             </h:Viewport3DX.Camera>
             <h:Viewport3DX.EffectsManager>
                 <h:DefaultEffectsManager></h:DefaultEffectsManager>
@@ -48,34 +50,29 @@
             <h:DirectionalLight3D Direction="50, -200, -100" />
 
             <!-- Skeleton Model -->
-            <h:MeshGeometryModel3D Geometry="{Binding Model}" x:Name="_SkeletonModel" CullMode="Back">
-                <h:MeshGeometryModel3D.Material>
-                    <h:DiffuseMaterial DiffuseColor="#FF606060" ></h:DiffuseMaterial>
-                </h:MeshGeometryModel3D.Material>
-                <h:MeshGeometryModel3D.Transform>
-                    <Transform3DGroup>
-                        <RotateTransform3D>
-                            <RotateTransform3D.Rotation>
-                                <AxisAngleRotation3D Angle="-90">
-                                    <AxisAngleRotation3D.Axis>
-                                        <Vector3D X="1" Y="0" Z="0"></Vector3D>
-                                    </AxisAngleRotation3D.Axis>
-                                </AxisAngleRotation3D>
-                            </RotateTransform3D.Rotation>
-                        </RotateTransform3D>
-                        <RotateTransform3D>
-                            <RotateTransform3D.Rotation>
-                                <AxisAngleRotation3D Angle="-90">
-                                    <AxisAngleRotation3D.Axis>
-                                        <Vector3D X="0" Y="1" Z="0"></Vector3D>
-                                    </AxisAngleRotation3D.Axis>
-                                </AxisAngleRotation3D>
-                            </RotateTransform3D.Rotation>
-                        </RotateTransform3D>
-                    </Transform3DGroup>
-                </h:MeshGeometryModel3D.Transform>
+           
+            <h:BatchedMeshGeometryModel3D 
+                x:Name="batchedMesh"
+                BatchedGeometries="{Binding SkeletonBatch}"
+                BatchedMaterials="{Binding MaterialBatch}"
+                CullMode="Back"
+                Material="{Binding MainSkeletonMaterial}"
+                Transform="{Binding BatchedTransform}"
+                Mouse3DUp="Skeleton_Mouse3DUp">
+                
+            </h:BatchedMeshGeometryModel3D>
+            
+            <h:MeshGeometryModel3D
+                CullMode="Back"
+                DepthBias="-100"
+                Geometry="{Binding SelectedMesh}"
+                IsHitTestVisible="False"
+                IsThrowingShadow="False"
+                Transform="{Binding BatchedTransform}"
+                Material="{Binding SelectedMaterial}"
+                >
+                
             </h:MeshGeometryModel3D>
-
             <h:AxisPlaneGridModel3D
                 UpAxis="Y"
                 AutoSpacing="false" GridColor="#FF666666" PlaneColor="#FF303030" GridPattern="Grid" GridThickness="0.03" GridSpacing="5" RenderShadowMap="True" />

@@ -31,5 +31,10 @@ namespace RomeoVet.Mesh
         {
             throw new NotImplementedException();
         }
+
+        Batch IMeshProvider.BuildModel()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
