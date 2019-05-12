@@ -109,17 +109,25 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\FringeConverter.cs" />
-    <Compile Include="Mesh\FileMeshProvider.cs" />
-    <Compile Include="Mesh\IMeshProvider.cs" />
+    <Compile Include="Mesh\FileBatchProvider.cs" />
+    <Compile Include="Mesh\FileModelProvider.cs" />
+    <Compile Include="Mesh\IBatchProvider.cs" />
+    <Compile Include="Mesh\IModelProvider.cs" />
+    <Compile Include="Mesh\Model.cs" />
     <Compile Include="Mesh\PerformanceMeshProvider.cs" />
     <Compile Include="Mesh\Batch.cs" />
     <Compile Include="Models\AnatomyDisplayModel.cs" />
+    <Compile Include="Models\AnatomyExplorerModel.cs" />
+    <Compile Include="Models\Anatomy\Animal.cs" />
+    <Compile Include="Models\Anatomy\BodyPart.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Util\GeometryHelper.cs" />
+    <Compile Include="Util\TextSerializer.cs" />
     <Compile Include="Util\TypeHelper.cs" />
     <Compile Include="ViewModels\AnatomyDisplayViewModel.cs" />
+    <Compile Include="ViewModels\AnatomyExplorerViewModel.cs" />
     <Compile Include="ViewModels\Common\AsynchronusViewModel.cs" />
-    <Compile Include="ViewModels\Locators\AnatomyDisplayVMLocator.cs" />
+    <Compile Include="ViewModels\Locators\MainVMLocator.cs" />
     <Page Include="Controls\AnatomyDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -171,7 +179,21 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Mesh\Providers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\IconBone.png" />
+    <Resource Include="Assets\Icons\IconSkin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\IconNerve.png" />
+    <Resource Include="Assets\Icons\IconOrgan.png" />
+    <Resource Include="Assets\Icons\IconVein.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\ViewCube.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\AssimpNet.4.1.0\build\AssimpNet.targets" Condition="Exists('..\packages\AssimpNet.4.1.0\build\AssimpNet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

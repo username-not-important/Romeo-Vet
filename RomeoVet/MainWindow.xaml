@@ -8,6 +8,11 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:controls="clr-namespace:RomeoVet.Controls"
         xmlns:hx="http://helix-toolkit.org/wpf/SharpDX"
+        xmlns:models="clr-namespace:RomeoVet.Models"
+        xmlns:viewModels="clr-namespace:RomeoVet.ViewModels"
+        xmlns:anatomy="clr-namespace:RomeoVet.Models.Anatomy"
+        xmlns:assisticant="clr-namespace:Assisticant;assembly=Assisticant.XAML"
+        xmlns:descriptors="clr-namespace:Assisticant.Descriptors;assembly=Assisticant.XAML"
         TextElement.Foreground="{DynamicResource MaterialDesignDarkForeground}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
@@ -19,6 +24,86 @@
         Loaded="MainWindow_OnLoaded"
         MinWidth="1280" MinHeight="720"
         Width="1280" Height="720">
+    <Window.Resources>
+
+        <HierarchicalDataTemplate DataType="{x:Type anatomy:BodyPart}"
+                                  ItemsSource="{Binding Children}">
+
+            <Grid Margin="3 2" Height="20" Background="Transparent">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                    <Image Name="_BodyPartIcon" Width="15" Visibility="Collapsed"></Image>
+                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Margin="3,0,0,0"/>
+                </StackPanel>
+
+                <Border Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <Button Name="_BodyPartIsolate" HorizontalAlignment="Right" ToolTip="Isolate" Visibility="Collapsed"
+                            Width="18" Height="18" Padding="0"
+                        Style="{StaticResource MaterialDesignToolButton}" Foreground="{StaticResource MaterialDesignDarkForeground}">
+                        <materialDesign:PackIcon Kind="CropFree" Width="16" Height="16"></materialDesign:PackIcon>
+                    </Button>
+                </Border>
+
+                <Grid.ContextMenu>
+                    <ContextMenu Name="_BodyPartMenu" Visibility="Collapsed">
+                        <MenuItem>
+                            <MenuItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Magnify" Width="16" Height="16"></materialDesign:PackIcon>
+                                    <TextBlock Text="Zoom Extends" Margin="5,0,0,0"></TextBlock>
+                                </StackPanel>
+                            </MenuItem.Header>
+                        </MenuItem>
+                        
+                        <MenuItem>
+                            <MenuItem.Header>
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="CropFree" Width="16" Height="16"></materialDesign:PackIcon>
+                                    <TextBlock Text="Isolate" Margin="5,0,0,0"></TextBlock>
+                                </StackPanel>
+                            </MenuItem.Header>
+                        </MenuItem>
+                    </ContextMenu>
+                </Grid.ContextMenu>
+            </Grid>
+
+            <HierarchicalDataTemplate.Triggers>
+                <DataTrigger Binding="{Binding PartType}" Value="Bone">
+                    <Setter TargetName="_BodyPartIcon" Property="Source" Value="Assets/Icons/IconBone.png"></Setter>
+                    <Setter TargetName="_BodyPartIcon" Property="Visibility" Value="Visible"></Setter>
+                    <Setter TargetName="_BodyPartIsolate" Property="Visibility" Value="Visible"></Setter>
+                    <Setter TargetName="_BodyPartMenu" Property="Visibility" Value="Visible"></Setter>
+                </DataTrigger>
+
+                <DataTrigger Binding="{Binding PartType}" Value="Organ">
+                    <Setter TargetName="_BodyPartIcon" Property="Source" Value="Assets/Icons/IconOrgan.png"></Setter>
+                    <Setter TargetName="_BodyPartIcon" Property="Visibility" Value="Visible"></Setter>
+                    <Setter TargetName="_BodyPartIsolate" Property="Visibility" Value="Visible"></Setter>
+                    <Setter TargetName="_BodyPartMenu" Property="Visibility" Value="Visible"></Setter>
+                </DataTrigger>
+
+                <DataTrigger Binding="{Binding PartType}" Value="Vein">
+                    <Setter TargetName="_BodyPartIcon" Property="Source" Value="Assets/Icons/IconVein.png"></Setter>
+                    <Setter TargetName="_BodyPartIcon" Property="Visibility" Value="Visible"></Setter>
+                    <Setter TargetName="_BodyPartIsolate" Property="Visibility" Value="Visible"></Setter>
+                    <Setter TargetName="_BodyPartMenu" Property="Visibility" Value="Visible"></Setter>
+                </DataTrigger>
+
+                <DataTrigger Binding="{Binding PartType}" Value="Nerve">
+                    <Setter TargetName="_BodyPartIcon" Property="Source" Value="Assets/Icons/IconNerve.png"></Setter>
+                    <Setter TargetName="_BodyPartIcon" Property="Visibility" Value="Visible"></Setter>
+                    <Setter TargetName="_BodyPartIsolate" Property="Visibility" Value="Visible"></Setter>
+                    <Setter TargetName="_BodyPartMenu" Property="Visibility" Value="Visible"></Setter>
+                </DataTrigger>
+            </HierarchicalDataTemplate.Triggers>
+        </HierarchicalDataTemplate>
+
+        <HierarchicalDataTemplate DataType="{x:Type anatomy:Animal}"
+                                  ItemsSource="{Binding BodyParts}">
+            <StackPanel Orientation="Horizontal" Margin="3 2">
+                <TextBlock Text="{Binding Name}"/>
+            </StackPanel>
+        </HierarchicalDataTemplate>
+    </Window.Resources>
     <Grid>
         <DockPanel>
 
@@ -42,11 +127,12 @@
                 <Grid>
                     <controls:AnatomyDisplay
                         x:Name="_AnatomyDisplay"
-                        DataContext="{Binding Source={StaticResource AnatomyDisplayVMLocator}, Path=MainVM}"></controls:AnatomyDisplay>
-                    
+                        DataContext="{Binding Source={StaticResource MainVMLocator}, Path=DisplayVM}"></controls:AnatomyDisplay>
+
                 </Grid>
                 <GridSplitter Grid.Column="0" HorizontalAlignment="Right" Width="5" ShowsPreview="True" ResizeDirection="Columns"></GridSplitter>
-                <Grid MinWidth="300" Margin="0,5,0,0"  Grid.Column="1">
+                <Grid MinWidth="300" Margin="0,5,0,0"  Grid.Column="1"
+                      DataContext="{Binding Source={StaticResource MainVMLocator}, Path=DisplayVM}">
                     <Border HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10"
                             Background="{StaticResource MaterialDesignGrayBrush}"
                             BorderBrush="{StaticResource MaterialDesignDarkBackground}"
@@ -54,25 +140,54 @@
                             >
                         <TextBlock Text="Anatomy Explorer"></TextBlock>
                     </Border>
-                    <Grid Margin="0,38,0,0" Background="{StaticResource MaterialDesignGrayBrush}">
+                    <Grid Margin="0,38,0,0" Background="{StaticResource MaterialDesignGrayBrush}"
+                          d:DataContext="{d:DesignInstance viewModels:AnatomyDisplayViewModel}">
                         <ToolBar VerticalAlignment="Top" Background="{x:Null}">
-                            <ToggleButton Style="{StaticResource MaterialDesignFlatToggleButton}" Margin="5" 
-                                          Foreground="{StaticResource NeonReddishGradient}" Width="30" Height="30">
-                                <materialDesign:PackIcon Kind="Cat"></materialDesign:PackIcon>
-                            </ToggleButton>
-                            
-                            <ToggleButton Style="{StaticResource MaterialDesignFlatToggleButton}" Margin="5" 
-                                          Foreground="{StaticResource NeonReddishGradient}" Width="30" Height="30">
-                                <materialDesign:PackIcon Kind="Bone"></materialDesign:PackIcon>
+                            <ToggleButton Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Margin="5" Padding="3"
+                                          Foreground="{StaticResource NeonReddishGradient}" Width="30" Height="30"
+                                          ToolTip="Show/Hide Skin"
+                                          IsChecked="{Binding ShowSkin}">
+                                <Image Source="Assets/Icons/IconSkin.png"></Image>
                             </ToggleButton>
 
-                            <ToggleButton Style="{StaticResource MaterialDesignFlatToggleButton}" Margin="5" 
+                            <ToggleButton Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Margin="5" Padding="3"
+                                          Foreground="{StaticResource NeonReddishGradient}" Width="30" Height="30"
+                                          ToolTip="Show/Hide Bones"
+                                          IsChecked="{Binding ShowSkeleton}">
+                                <Image Source="Assets/Icons/IconBone.png"></Image>
+                            </ToggleButton>
+
+                            <ToggleButton Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Margin="5" Padding="3"
+                                          ToolTip="Show/Hide Organs"
                                           Foreground="{StaticResource NeonReddishGradient}" Width="30" Height="30">
-                                <materialDesign:PackIcon Kind="Heart"></materialDesign:PackIcon>
+                                <Image Source="Assets/Icons/IconOrgan.png"></Image>
+                            </ToggleButton>
+
+                            <ToggleButton Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Margin="5" Padding="3"
+                                          ToolTip="Show/Hide Nerves"
+                                          Foreground="{StaticResource NeonReddishGradient}" Width="30" Height="30">
+                                <Image Source="Assets/Icons/IconNerve.png"></Image>
+                            </ToggleButton>
+
+                            <ToggleButton Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}" Margin="5" Padding="3"
+                                          ToolTip="Show/Hide Veins"
+                                          Foreground="{StaticResource NeonReddishGradient}" Width="30" Height="30">
+                                <Image Source="Assets/Icons/IconVein.png"></Image>
                             </ToggleButton>
 
                         </ToolBar>
+                        <TreeView Margin="0,50,0,0" Name="AnatomyTree" HorizontalContentAlignment="Stretch"
+                                  ItemsSource="{Binding Source={StaticResource MainVMLocator}, Path=ExplorerVM.Anatomy}"
+                                  ItemTemplateSelector="{StaticResource ViewSelector}" SelectedItemChanged="AnatomyTree_SelectedItemChanged">
+                            <TreeView.ItemContainerStyle>
+                                <Style TargetType="TreeViewItem" BasedOn="{StaticResource MaterialDesignTreeViewItem}">
+                                    <Setter Property="IsExpanded" Value="{Binding IsExpanded}"/>
+                                    <Setter Property="IsSelected" Value="{Binding IsSelected}"></Setter>
+                                </Style>
+                            </TreeView.ItemContainerStyle>
+                        </TreeView>
                     </Grid>
+
                 </Grid>
             </Grid>
 

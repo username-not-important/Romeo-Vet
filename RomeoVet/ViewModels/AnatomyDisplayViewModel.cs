@@ -2,16 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media.Media3D;
+using System.Windows.Resources;
 using Assisticant;
 using Assisticant.Fields;
 using HelixToolkit.Wpf.SharpDX;
 using HelixToolkit.Wpf.SharpDX.Model;
-using RomeoVet.Annotations;
 using RomeoVet.Mesh;
 using RomeoVet.Models;
 using RomeoVet.ViewModels.Common;
@@ -30,6 +32,8 @@ namespace RomeoVet.ViewModels
             _display = display;
         }
 
+        #region Skeleton
+
         public IList<BatchedMeshGeometryConfig> SkeletonBatch => _display.SkeletonBatch;
         public IList<Material> MaterialBatch => _display.MaterialBatch;
 
@@ -43,18 +47,48 @@ namespace RomeoVet.ViewModels
 
         public Transform3D BatchedTransform => _display.BatchedTransform;
 
+        #endregion
+
+        #region Skin
+
+        public Geometry3D SkinMesh
+        {
+            get { return _display.SkinMesh; }
+            set { _display.SkinMesh = value; }
+        }
+        public Material SkinMaterial => _display.SkinMaterial;
+        public Transform3D SkinTransform => _display.SkinTransform;
+
+        #endregion
+
+        public Stream ViewBoxTexture => Application.GetResourceStream(new Uri("Assets/ViewCube.jpg", UriKind.Relative)).Stream;
+
+        public bool ShowSkin
+        {
+            get { return _display.ShowSkin; } set { _display.ShowSkin = value; }
+        }
+        public bool ShowSkeleton
+        {
+            get { return _display.ShowSkeleton; } set { _display.ShowSkeleton = value; }
+        }
+
         public event EventHandler ModelChanged;
-        
-        public void LoadModel(IMeshProvider provider)
+
+        public void LoadModels(IBatchProvider skeletonProvider,
+                               IModelProvider skinProvider)
         {
             Perform(async delegate
             {
                 await Task.Run(() =>
                 {
-                    var batch = provider.BuildModel();
+                    var skeletonBatch = skeletonProvider.BuildModel();
+                    var skinModel = skinProvider.BuildModel();
 
-                    _display.ImportBatch(batch);
-                    
+                    _display.ImportSkeleton(skeletonBatch);
+                    _display.ImportSkin(skinModel);
+
+                    //TODO: import names from batch
+
                     OnModelChanged();
                 });
 
@@ -65,6 +99,6 @@ namespace RomeoVet.ViewModels
         {
             ModelChanged?.Invoke(this, EventArgs.Empty);
         }
-        
+
     }
 }

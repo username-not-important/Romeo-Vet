@@ -20,12 +20,12 @@
         <h:Viewport3DX
             Name="_Viewport"
             BackgroundColor="#303030"
-            ShowViewCube="True" EnableDesignModeRendering="True"
+            EnableDesignModeRendering="True"
             IsEnabled="{Binding IsIdle}"
             IsShadowMappingEnabled="True"
-            UseDefaultGestures="False" 
+            UseDefaultGestures="False" ShowViewCube="False"
             ZoomExtentsWhenLoaded="True" RotateCursor="None"
-            ZoomAroundMouseDownPoint="False" RotateAroundMouseDownPoint="True" FXAALevel="High" CoordinateSystemLabelY="Z" CoordinateSystemLabelZ="Y" MSAA="Two">
+            ZoomAroundMouseDownPoint="False" RotateAroundMouseDownPoint="True" FXAALevel="High" CoordinateSystemLabelY="Z" CoordinateSystemLabelZ="Y" MSAA="Two" RotationSensitivity="0.7">
             <h:Viewport3DX.Camera>
                 <h:PerspectiveCamera UpDirection="0,1,0" FarPlaneDistance="4000"/>
             </h:Viewport3DX.Camera>
@@ -44,24 +44,42 @@
                 <MouseBinding Command="h:ViewportCommands.Zoom" Gesture="MiddleClick" />
                 <MouseBinding Command="h:ViewportCommands.Pan" Gesture="RightClick" />
             </h:Viewport3DX.InputBindings>
-            
-            <h:ShadowMap3D OrthoWidth="300" />
-            <h:AmbientLight3D Color="#414141" />
-            <h:DirectionalLight3D Direction="50, -200, -100" />
 
+            <h:ViewBoxModel3D ViewBoxTexture="{Binding ViewBoxTexture}" UpDirection="0,1,0"/>
+
+            <h:ShadowMap3D OrthoWidth="300" />
+            <h:AmbientLight3D Color="#212141" />
+            <h:DirectionalLight3D  Direction="50, -200, -100" Color="#FFAAAAAA" />
+            <h:DirectionalLight3D  Direction="-300, -200, 100" Color="#FF404040" />
+
+            <!-- Skin Model -->
+            <h:MeshGeometryModel3D
+                CullMode="Front"
+                DepthBias="-100"
+                Geometry="{Binding SkinMesh}"
+                IsHitTestVisible="False"
+                IsThrowingShadow="False"
+                IsTransparent="True"
+                Transform="{Binding SkinTransform}"
+                Material="{Binding SkinMaterial}"
+                Visibility="{Binding ShowSkin, Converter={StaticResource BooleanToVisibilityConverter}}"
+            >
+
+            </h:MeshGeometryModel3D>
+            
             <!-- Skeleton Model -->
-           
             <h:BatchedMeshGeometryModel3D 
                 x:Name="batchedMesh"
-                BatchedGeometries="{Binding SkeletonBatch}"
-                BatchedMaterials="{Binding MaterialBatch}"
                 CullMode="Back"
+                BatchedGeometries="{Binding SkeletonBatch}"
                 Material="{Binding MainSkeletonMaterial}"
                 Transform="{Binding BatchedTransform}"
+                Visibility="{Binding ShowSkeleton, Converter={StaticResource BooleanToVisibilityConverter}}"
                 Mouse3DUp="Skeleton_Mouse3DUp">
                 
             </h:BatchedMeshGeometryModel3D>
-            
+
+            <!-- Skeleton Selected Item -->
             <h:MeshGeometryModel3D
                 CullMode="Back"
                 DepthBias="-100"

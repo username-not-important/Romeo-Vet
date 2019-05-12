@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net.Mime;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
-using HelixToolkit.Wpf;
 using HelixToolkit.Wpf.SharpDX;
 using SharpDX;
 
 namespace RomeoVet.Mesh
 {
-    public class PerformanceMeshProvider : IMeshProvider
+    public class PerformanceMeshProvider : IBatchProvider
     {
         
         Geometry3D BuildMesh()
@@ -32,7 +26,7 @@ namespace RomeoVet.Mesh
             throw new NotImplementedException();
         }
 
-        Batch IMeshProvider.BuildModel()
+        Batch IBatchProvider.BuildModel()
         {
             throw new NotImplementedException();
         }

@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:RomeoVet"
              xmlns:locators="clr-namespace:RomeoVet.ViewModels.Locators"
+             xmlns:anatomy="clr-namespace:RomeoVet.Models.Anatomy"
+             xmlns:assisticant="clr-namespace:Assisticant;assembly=Assisticant.XAML"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          <ResourceDictionary>
@@ -16,8 +18,10 @@
 
             </ResourceDictionary.MergedDictionaries>
 
-            <locators:AnatomyDisplayVMLocator x:Key="AnatomyDisplayVMLocator"/>
-
+            <locators:MainVMLocator x:Key="MainVMLocator"/>
+             
+             <assisticant:ViewSelector x:Key="ViewSelector"/>
+             
             <Color x:Key="MaterialDesignGrayColor">#535353</Color>
              <SolidColorBrush x:Key="MaterialDesignGrayBrush" Color="{DynamicResource MaterialDesignGrayColor}"></SolidColorBrush>
              

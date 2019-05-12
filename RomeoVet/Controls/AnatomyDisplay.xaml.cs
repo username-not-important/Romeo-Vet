@@ -72,7 +72,7 @@ namespace RomeoVet.Controls
             }
 
             var dc = ForView.Unwrap<AnatomyDisplayViewModel>(DataContext);
-
+            
             if (dc.SelectedMesh == e.HitTestResult.Geometry)
                 dc.SelectedMesh = null;
             else
