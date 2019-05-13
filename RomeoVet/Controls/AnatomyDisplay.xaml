@@ -49,7 +49,7 @@
 
             <h:ShadowMap3D OrthoWidth="300" />
             <h:AmbientLight3D Color="#212141" />
-            <h:DirectionalLight3D  Direction="50, -200, -100" Color="#FFAAAAAA" />
+            <h:DirectionalLight3D  Direction="50, -200, -100" Color="{Binding LightColor}" />
             <h:DirectionalLight3D  Direction="-300, -200, 100" Color="#FF404040" />
 
             <!-- Skin Model -->

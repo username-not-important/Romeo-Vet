@@ -8,12 +8,14 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Windows.Resources;
 using Assisticant;
 using Assisticant.Fields;
 using HelixToolkit.Wpf.SharpDX;
 using HelixToolkit.Wpf.SharpDX.Model;
+using PropertyTools.Wpf;
 using RomeoVet.Mesh;
 using RomeoVet.Models;
 using RomeoVet.ViewModels.Common;
@@ -71,6 +73,20 @@ namespace RomeoVet.ViewModels
         {
             get { return _display.ShowSkeleton; } set { _display.ShowSkeleton = value; }
         }
+
+        public int LightIntensity
+        {
+            get
+            {
+                return _display.LightColor.ColorToHsvBytes()[2];
+            }
+            set
+            {
+                _display.LightColor = Color.FromRgb((byte)value, (byte)value, (byte)value);
+            }
+        }
+
+        public Color LightColor => _display.LightColor;
 
         public event EventHandler ModelChanged;
 

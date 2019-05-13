@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="RomeoVet.Controls.IsolatedDisplay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RomeoVet.Controls"
+             xmlns:viewModels="clr-namespace:RomeoVet.ViewModels"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             TextElement.Foreground="{DynamicResource MaterialDesignDarkForeground}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             FontFamily="{DynamicResource MaterialDesignFont}" 
+             mc:Ignorable="d" HorizontalAlignment="Left" VerticalAlignment="Top">
+    <DockPanel MinWidth="300">
+        <Grid Background="{StaticResource MaterialDesignGrayBrush}"
+            DataContext="{Binding DisplayVM, Source={StaticResource MainVMLocator}}" HorizontalAlignment="Left" VerticalAlignment="Top" DockPanel.Dock="Top" Margin="0,0,0,2">
+            <Border HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10"
+                    BorderThickness="0,0,25,2">
+                <TextBlock Text="Isolated View"/>
+            </Border>
+            <Button HorizontalAlignment="Right" Style="{StaticResource MaterialDesignToolButton}" Margin="0,0,3,0" Click="_Close_Click" 
+                    Foreground="{StaticResource MaterialDesignDarkForeground}">
+                <materialDesign:PackIcon Kind="Close"></materialDesign:PackIcon>
+            </Button>
+        </Grid>
+        <Grid Margin="0" Background="{StaticResource MaterialDesignGrayBrush}"
+              d:DataContext="{d:DesignInstance viewModels:AnatomyDisplayViewModel}" MinWidth="300" MinHeight="300"></Grid>
+    </DockPanel>
+</UserControl>

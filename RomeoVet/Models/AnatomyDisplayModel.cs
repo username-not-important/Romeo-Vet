@@ -10,6 +10,7 @@ using Assisticant.Fields;
 using HelixToolkit.Wpf.SharpDX;
 using RomeoVet.Mesh;
 using SharpDX;
+using Color = System.Windows.Media.Color;
 using Geometry3D = HelixToolkit.Wpf.SharpDX.Geometry3D;
 using Material = HelixToolkit.Wpf.SharpDX.Material;
 
@@ -109,10 +110,14 @@ namespace RomeoVet.Models
 
         private Observable<bool> _showSkeleton = new Observable<bool>(true);
         private Observable<bool> _showSkin = new Observable<bool>(true);
+        
+        private Observable<Color> _lightColor = new Observable<Color>(Color.FromRgb(170,170,170));
 
         public bool ShowSkeleton { get { return _showSkeleton; } set { _showSkeleton.Value = value; } }
         public bool ShowSkin { get { return _showSkin; } set { _showSkin.Value = value; } }
         
+        public Color LightColor { get { return _lightColor; } set { _lightColor.Value = value; } }
+
         public void ImportSkeleton(Batch batch)
         {
             _materialBatch.Clear();

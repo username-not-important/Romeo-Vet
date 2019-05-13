@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="RomeoVet.Controls.SettingsControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:RomeoVet.Controls"
+             xmlns:pt="http://propertytools.org/wpf"
+             xmlns:viewModels="clr-namespace:RomeoVet.ViewModels"
+             TextElement.Foreground="{DynamicResource MaterialDesignDarkForeground}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             FontFamily="{DynamicResource MaterialDesignFont}" 
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="250">
+    <Grid>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" Text="Settings" Margin="5" Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                   FontWeight="Bold"></TextBlock>
+        <StackPanel Margin="10, 40, 10 ,0">
+            <Grid DataContext="{Binding Source={StaticResource MainVMLocator}, Path=DisplayVM}"
+                  d:DataContext="{d:DesignInstance viewModels:AnatomyDisplayViewModel}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100*"/>
+                    <ColumnDefinition Width="150*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Light Intensity" VerticalAlignment="Center"></TextBlock>
+                <Slider Grid.Column="1" Minimum="0" Maximum="255" Value="{Binding LightIntensity}" SmallChange="1"></Slider>
+            </Grid>
+        </StackPanel>
+
+    </Grid>
+</UserControl>
