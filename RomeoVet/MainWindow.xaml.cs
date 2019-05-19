@@ -78,29 +78,39 @@ namespace RomeoVet
             {
                 if (p.PartType == BodyPartType.Bone)
                 {
-                    
+
                 }
             }
         }
 
         private void _BodyPartIsolate_OnClick(object sender, RoutedEventArgs e)
         {
-            if (! "Open/Maximized".Contains(IsolatedViewStates.CurrentState?.Name ?? "Closed"))
+            _BodyPartSelect_OnClick(sender, e);
+            _isolateViewOpen();
+        }
+
+        private void _BodyPartSelect_OnClick(object sender, RoutedEventArgs e)
+        {
+            BodyPart part = (sender as FrameworkElement).DataContext as BodyPart;
+            if (part == null) return;
+
+            part.IsSelected = true;
+
+            ForView.Unwrap<AnatomyDisplayViewModel>(App.VMLocator<MainVMLocator>().DisplayVM).SelectItem(part.Name, part.PartType);
+        }
+
+        private void _isolateViewOpen()
+        {
+            if (!"Open".Contains(IsolatedViewStates.CurrentState?.Name ?? "Closed"))
                 VisualStateManager.GoToElementState(_ParentGrid, "Open", true);
         }
 
-        private void _MaximizeIsolationView_OnClick(object sender, RoutedEventArgs e)
-        {
-            if (IsolatedViewStates.CurrentState?.Name == "Open")
-                VisualStateManager.GoToElementState(_ParentGrid, "Maximized", true);
-            else if (IsolatedViewStates.CurrentState?.Name == "Maximized")
-                VisualStateManager.GoToElementState(_ParentGrid, "Open", true);
-        }
 
         private void _IsolatedDisplay_OnClosed(object sender, RoutedEventArgs e)
         {
-            if ("Open/Maximized".Contains(IsolatedViewStates.CurrentState?.Name ?? "Closed"))
+            if ("Open".Contains(IsolatedViewStates.CurrentState?.Name ?? "Closed"))
                 VisualStateManager.GoToElementState(_ParentGrid, "Closed", true);
         }
+
     }
 }

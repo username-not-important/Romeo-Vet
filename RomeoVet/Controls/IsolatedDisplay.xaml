@@ -6,16 +6,18 @@
              xmlns:local="clr-namespace:RomeoVet.Controls"
              xmlns:viewModels="clr-namespace:RomeoVet.ViewModels"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:hx="http://helix-toolkit.org/wpf/SharpDX"
              TextElement.Foreground="{DynamicResource MaterialDesignDarkForeground}"
              TextElement.FontWeight="Regular"
              TextElement.FontSize="13"
              TextOptions.TextFormattingMode="Ideal"
              TextOptions.TextRenderingMode="Auto"
              FontFamily="{DynamicResource MaterialDesignFont}" 
+             DataContext="{Binding DisplayVM, Source={StaticResource MainVMLocator}}"
              mc:Ignorable="d" HorizontalAlignment="Left" VerticalAlignment="Top">
     <DockPanel MinWidth="300">
         <Grid Background="{StaticResource MaterialDesignGrayBrush}"
-            DataContext="{Binding DisplayVM, Source={StaticResource MainVMLocator}}" HorizontalAlignment="Left" VerticalAlignment="Top" DockPanel.Dock="Top" Margin="0,0,0,2">
+             HorizontalAlignment="Left" VerticalAlignment="Top" DockPanel.Dock="Top">
             <Border HorizontalAlignment="Left" VerticalAlignment="Top" Padding="10"
                     BorderThickness="0,0,25,2">
                 <TextBlock Text="Isolated View"/>
@@ -26,6 +28,62 @@
             </Button>
         </Grid>
         <Grid Margin="0" Background="{StaticResource MaterialDesignGrayBrush}"
-              d:DataContext="{d:DesignInstance viewModels:AnatomyDisplayViewModel}" MinWidth="300" MinHeight="300"></Grid>
+              d:DataContext="{d:DesignInstance viewModels:AnatomyDisplayViewModel}" MinWidth="300" MinHeight="300">
+            <Border BorderBrush="{StaticResource MaterialDesignGrayBrush}" BorderThickness="4">
+                <hx:Viewport3DX
+                    Name="_Viewport"
+                    BackgroundColor="#303030"
+                    EnableDesignModeRendering="True"
+                    IsEnabled="{Binding IsIdle}"
+                    IsShadowMappingEnabled="True"
+                    UseDefaultGestures="False" ShowViewCube="False"
+                    ZoomExtentsWhenLoaded="True" RotateCursor="None"
+                    ZoomAroundMouseDownPoint="False" RotateAroundMouseDownPoint="True" FXAALevel="High" CoordinateSystemLabelY="Z" CoordinateSystemLabelZ="Y" MSAA="Two" RotationSensitivity="0.7">
+                    <hx:Viewport3DX.Camera>
+                        <hx:PerspectiveCamera UpDirection="0,1,0" FarPlaneDistance="4000"/>
+                    </hx:Viewport3DX.Camera>
+                    <hx:Viewport3DX.EffectsManager>
+                        <hx:DefaultEffectsManager></hx:DefaultEffectsManager>
+                    </hx:Viewport3DX.EffectsManager>
+                    <hx:Viewport3DX.InputBindings>
+                        <KeyBinding Key="B" Command="hx:ViewportCommands.BackView" />
+                        <KeyBinding Key="F" Command="hx:ViewportCommands.FrontView" />
+                        <KeyBinding Key="U" Command="hx:ViewportCommands.TopView" />
+                        <KeyBinding Key="D" Command="hx:ViewportCommands.BottomView" />
+                        <KeyBinding Key="L" Command="hx:ViewportCommands.LeftView" />
+                        <KeyBinding Key="R" Command="hx:ViewportCommands.RightView" />
+                        <KeyBinding Command="hx:ViewportCommands.ZoomExtents" Gesture="Control+E" />
+                        <MouseBinding Command="hx:ViewportCommands.Rotate" Gesture="LeftClick" />
+                        <MouseBinding Command="hx:ViewportCommands.Zoom" Gesture="MiddleClick" />
+                        <MouseBinding Command="hx:ViewportCommands.Pan" Gesture="RightClick" />
+                    </hx:Viewport3DX.InputBindings>
+
+                    <hx:ViewBoxModel3D ViewBoxTexture="{Binding ViewBoxTexture}" UpDirection="0,1,0"/>
+
+                    <hx:ShadowMap3D OrthoWidth="300" />
+                    <hx:AmbientLight3D Color="#212141" />
+                    <hx:DirectionalLight3D  Direction="50, -200, -100" Color="{Binding LightColor}" />
+                    <hx:DirectionalLight3D  Direction="-300, -200, 100" Color="#FF404040" />
+
+                    <!-- Selected Item -->
+                    <hx:MeshGeometryModel3D
+                        x:Name="_SelectionMesh"
+                        CullMode="Back"
+                        DepthBias="-100"
+                        Geometry="{Binding SelectedMesh}"
+                        IsHitTestVisible="True"
+                        IsThrowingShadow="False"
+                        Transform="{Binding BatchedTransform}"
+                        Material="{Binding SelectedMaterial}"
+                    >
+
+                    </hx:MeshGeometryModel3D>
+                    <hx:AxisPlaneGridModel3D
+                        UpAxis="Y"
+                        AutoSpacing="false" GridColor="#FF666666" PlaneColor="#FF303030" GridPattern="Grid" GridThickness="0.03" GridSpacing="5" RenderShadowMap="True" />
+
+                </hx:Viewport3DX>
+            </Border>
+        </Grid>
     </DockPanel>
 </UserControl>

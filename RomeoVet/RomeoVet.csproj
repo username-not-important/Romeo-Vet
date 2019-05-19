@@ -135,11 +135,13 @@
     <Compile Include="Models\Anatomy\Animal.cs" />
     <Compile Include="Models\Anatomy\BodyPart.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Properties\Annotations1.cs" />
     <Compile Include="Util\GeometryHelper.cs" />
     <Compile Include="Util\TextSerializer.cs" />
     <Compile Include="Util\TypeHelper.cs" />
     <Compile Include="ViewModels\AnatomyDisplayViewModel.cs" />
     <Compile Include="ViewModels\AnatomyExplorerViewModel.cs" />
+    <Compile Include="ViewModels\AnatomyTreeHelper.cs" />
     <Compile Include="ViewModels\Common\AsynchronusViewModel.cs" />
     <Compile Include="ViewModels\Locators\MainVMLocator.cs" />
     <Page Include="Controls\AnatomyDisplay.xaml">

@@ -30,6 +30,8 @@ namespace RomeoVet.Models
         public IList<BatchedMeshGeometryConfig> SkeletonBatch => _skeletonBatch;
         public IList<Material> MaterialBatch => _materialBatch;
 
+        public Dictionary<string, Guid> BoneNameDictionary { get; set; }
+
         public Geometry3D SelectedMesh
         {
             get { return _selectedMesh; }

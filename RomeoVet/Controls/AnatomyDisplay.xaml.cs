@@ -19,6 +19,7 @@ using Assisticant.Collections;
 using HelixToolkit.Wpf.SharpDX;
 using RomeoVet.Util;
 using RomeoVet.ViewModels;
+using RomeoVet.ViewModels.Locators;
 using SharpDX;
 using Material = HelixToolkit.Wpf.SharpDX.Material;
 
@@ -57,7 +58,6 @@ namespace RomeoVet.Controls
                 batchedMesh.BatchedMaterials = new List<Material>(vm.MaterialBatch);
 
                 _Viewport.SetView(new Point3D(-7.5, 15, 11), new Vector3D(11, -11, -11), new Vector3D(0, 1, 0), 1000);
-                //_Viewport.ZoomExtents();
             });
 
         }
@@ -72,13 +72,20 @@ namespace RomeoVet.Controls
             }
 
             var dc = ForView.Unwrap<AnatomyDisplayViewModel>(DataContext);
-            
+            var treedc = ForView.Unwrap<AnatomyExplorerViewModel>(App.VMLocator<MainVMLocator>().ExplorerVM);
+
+            string bone = dc.GetBoneName(e.HitTestResult.Geometry.GUID);
+
             if (dc.SelectedMesh == e.HitTestResult.Geometry)
+            {
                 dc.SelectedMesh = null;
+                treedc.DiscardSelection();
+            }
             else
             {
                 dc.SelectedMesh = e.HitTestResult.Geometry;
-                
+                treedc.SelectBone(bone);
+
                 _Viewport.ZoomExtents(e.HitTestResult.PointHit.ToPoint3D(), 1, 350);
             }
 

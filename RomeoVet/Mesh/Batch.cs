@@ -12,7 +12,7 @@ namespace RomeoVet.Mesh
         public List<BatchedMeshGeometryConfig> MeshList { get; set; }
         public List<Material> Materials { get; set; }
 
-        private Dictionary<string, Guid> Names { get; set; }
+        public Dictionary<string, Guid> Names { get; private set; }
 
         public Batch()
         {

@@ -18,6 +18,7 @@ using HelixToolkit.Wpf.SharpDX.Model;
 using PropertyTools.Wpf;
 using RomeoVet.Mesh;
 using RomeoVet.Models;
+using RomeoVet.Models.Anatomy;
 using RomeoVet.ViewModels.Common;
 using Camera = HelixToolkit.Wpf.SharpDX.Camera;
 using Geometry3D = HelixToolkit.Wpf.SharpDX.Geometry3D;
@@ -42,10 +43,16 @@ namespace RomeoVet.ViewModels
         public Geometry3D SelectedMesh
         {
             get { return _display.SelectedMesh; }
-            set { _display.SelectedMesh = value; }
+            set
+            {
+                _display.SelectedMesh = value;
+                OnSelectionChanged(value);
+            }
         }
         public Material MainSkeletonMaterial => _display.MainSkeletonMaterial;
         public Material SelectedMaterial => _display.SelectedMaterial;
+
+        public Dictionary<string, Guid> BoneNameDictionary => _display.BoneNameDictionary;
 
         public Transform3D BatchedTransform => _display.BatchedTransform;
 
@@ -89,6 +96,7 @@ namespace RomeoVet.ViewModels
         public Color LightColor => _display.LightColor;
 
         public event EventHandler ModelChanged;
+        public event EventHandler<Geometry3D> SelectionChanged;
 
         public void LoadModels(IBatchProvider skeletonProvider,
                                IModelProvider skinProvider)
@@ -103,7 +111,7 @@ namespace RomeoVet.ViewModels
                     _display.ImportSkeleton(skeletonBatch);
                     _display.ImportSkin(skinModel);
 
-                    //TODO: import names from batch
+                    _display.BoneNameDictionary = skeletonBatch.Names;
 
                     OnModelChanged();
                 });
@@ -114,6 +122,56 @@ namespace RomeoVet.ViewModels
         protected virtual void OnModelChanged()
         {
             ModelChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnSelectionChanged(Geometry3D e)
+        {
+            SelectionChanged?.Invoke(this, e);
+        }
+
+        public string GetBoneName(Guid geometryGuid)
+        {
+            if (BoneNameDictionary.ContainsValue(geometryGuid))
+                return BoneNameDictionary.First(p => p.Value == geometryGuid).Key;
+
+            return "";
+        }
+
+        public Guid GetBoneGuid(string name)
+        {
+            if (BoneNameDictionary.ContainsKey(name))
+                return BoneNameDictionary[name];
+
+            return Guid.Empty;
+        }
+
+        public void SelectItem(string name, BodyPartType type)
+        {
+            Guid guid;
+
+            switch (type)
+            {
+                case BodyPartType.Limb:
+                    break;
+                case BodyPartType.Category:
+                    break;
+                case BodyPartType.Bone:
+                    guid = GetBoneGuid(name);
+                    SelectedMesh = SkeletonBatch.First(c => c.Geometry.GUID == guid).Geometry;
+                    break;
+                case BodyPartType.Organ:
+                    break;
+                case BodyPartType.Muscle:
+                    break;
+                case BodyPartType.Vein:
+                    break;
+                case BodyPartType.Nerve:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+            
+
         }
 
     }

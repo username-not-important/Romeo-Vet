@@ -31,7 +31,7 @@
         <HierarchicalDataTemplate DataType="{x:Type anatomy:BodyPart}"
                                   ItemsSource="{Binding Children}">
 
-            <Grid Margin="3 2" Height="20" Background="Transparent">
+            <Grid Margin="3 2" Height="20" Background="Transparent" >
 
                 <Grid.ContextMenu>
                     <ContextMenu x:Name="_BodyPartMenu" Visibility="Collapsed">
@@ -59,13 +59,19 @@
                     <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Margin="3,0,0,0"/>
                 </StackPanel>
 
-                <Border Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}}">
-                    <Button x:Name="_BodyPartIsolate" HorizontalAlignment="Right" ToolTip="Isolate" Visibility="Collapsed"
+                <StackPanel Orientation="Horizontal"
+                    Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}}" HorizontalAlignment="Right">
+                    <Button x:Name="_BodyPartSelect" ToolTip="Select this Item" Visibility="Collapsed"
+                            Width="18" Height="18" Padding="0" Click="_BodyPartSelect_OnClick"
+                            Style="{StaticResource MaterialDesignToolButton}" Foreground="{StaticResource MaterialDesignDarkForeground}">
+                        <materialDesign:PackIcon Kind="Select" Width="16" Height="16"/>
+                    </Button>
+                    <Button x:Name="_BodyPartIsolate" ToolTip="Isolate" Visibility="Collapsed"
                             Width="18" Height="18" Padding="0" Click="_BodyPartIsolate_OnClick"
                         Style="{StaticResource MaterialDesignToolButton}" Foreground="{StaticResource MaterialDesignDarkForeground}">
                         <materialDesign:PackIcon Kind="CropFree" Width="16" Height="16"/>
                     </Button>
-                </Border>
+                </StackPanel>
 
             </Grid>
 
@@ -74,6 +80,7 @@
                     <Setter TargetName="_BodyPartIcon" Property="Source" Value="Assets/Icons/IconBone.png"/>
                     <Setter TargetName="_BodyPartIcon" Property="Visibility" Value="Visible"/>
                     <Setter TargetName="_BodyPartIsolate" Property="Visibility" Value="Visible"/>
+                    <Setter TargetName="_BodyPartSelect" Property="Visibility" Value="Visible"/>
                     <Setter TargetName="_BodyPartMenu" Property="Visibility" Value="Visible"/>
                 </DataTrigger>
 
@@ -81,6 +88,7 @@
                     <Setter TargetName="_BodyPartIcon" Property="Source" Value="Assets/Icons/IconOrgan.png"/>
                     <Setter TargetName="_BodyPartIcon" Property="Visibility" Value="Visible"/>
                     <Setter TargetName="_BodyPartIsolate" Property="Visibility" Value="Visible"/>
+                    <Setter TargetName="_BodyPartSelect" Property="Visibility" Value="Visible"/>
                     <Setter TargetName="_BodyPartMenu" Property="Visibility" Value="Visible"/>
                 </DataTrigger>
 
@@ -88,6 +96,7 @@
                     <Setter TargetName="_BodyPartIcon" Property="Source" Value="Assets/Icons/IconVein.png"/>
                     <Setter TargetName="_BodyPartIcon" Property="Visibility" Value="Visible"/>
                     <Setter TargetName="_BodyPartIsolate" Property="Visibility" Value="Visible"/>
+                    <Setter TargetName="_BodyPartSelect" Property="Visibility" Value="Visible"/>
                     <Setter TargetName="_BodyPartMenu" Property="Visibility" Value="Visible"/>
                 </DataTrigger>
 
@@ -95,6 +104,7 @@
                     <Setter TargetName="_BodyPartIcon" Property="Source" Value="Assets/Icons/IconNerve.png"/>
                     <Setter TargetName="_BodyPartIcon" Property="Visibility" Value="Visible"/>
                     <Setter TargetName="_BodyPartIsolate" Property="Visibility" Value="Visible"/>
+                    <Setter TargetName="_BodyPartSelect" Property="Visibility" Value="Visible"/>
                     <Setter TargetName="_BodyPartMenu" Property="Visibility" Value="Visible"/>
                 </DataTrigger>
             </HierarchicalDataTemplate.Triggers>
@@ -123,18 +133,6 @@
                             </ObjectAnimationUsingKeyFrames>
                         </Storyboard>
                     </VisualTransition>
-                    <VisualTransition From="Maximized" GeneratedDuration="0:0:0.1" To="Closed">
-                        <VisualTransition.GeneratedEasingFunction>
-                            <CircleEase EasingMode="EaseOut"/>
-                        </VisualTransition.GeneratedEasingFunction>
-                        <Storyboard>
-                            <DoubleAnimation Duration="0:0:0.1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="_IsolatedDisplay">
-                                <DoubleAnimation.EasingFunction>
-                                    <CircleEase EasingMode="EaseOut"/>
-                                </DoubleAnimation.EasingFunction>
-                            </DoubleAnimation>
-                        </Storyboard>
-                    </VisualTransition>
                 </VisualStateGroup.Transitions>
                 <VisualState x:Name="Closed"/>
                 <VisualState x:Name="Open">
@@ -145,22 +143,6 @@
                         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="_IsolatedDisplay">
                             <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
                         </DoubleAnimationUsingKeyFrames>
-                    </Storyboard>
-                </VisualState>
-                <VisualState x:Name="Maximized">
-                    <Storyboard>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="_IsolatedDisplay">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
-                        </ObjectAnimationUsingKeyFrames>
-                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="_IsolatedDisplay">
-                            <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
-                        </DoubleAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.HorizontalAlignment)" Storyboard.TargetName="_IsolatedDisplay">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static HorizontalAlignment.Stretch}"/>
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.VerticalAlignment)" Storyboard.TargetName="_IsolatedDisplay">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static VerticalAlignment.Stretch}"/>
-                        </ObjectAnimationUsingKeyFrames>
                     </Storyboard>
                 </VisualState>
             </VisualStateGroup>
@@ -190,7 +172,7 @@
                         DataContext="{Binding DisplayVM, Source={StaticResource MainVMLocator}}"/>
 
                     <controls:IsolatedDisplay x:Name="_IsolatedDisplay" Margin="5" Visibility="Collapsed" Opacity="0"
-                                              Closed="_IsolatedDisplay_OnClosed"/>
+                                              Closed="_IsolatedDisplay_OnClosed" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
                     <Border HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="40"
                             CornerRadius="15" Padding="5,0,5,0"
@@ -207,9 +189,8 @@
                                 <controls:SettingsControl Width="250" Height="400"/>
                             </materialDesign:PopupBox>
                             <Button ToolTip="Maximize/Minimize Isolation View" Style="{StaticResource MaterialDesignFlatButton}" 
-                                    Width="30" Padding="0" Foreground="{StaticResource MaterialDesignDarkForeground}" Height="Auto"
-                                    Click="_MaximizeIsolationView_OnClick">
-                                
+                                    Width="30" Padding="0" Foreground="{StaticResource MaterialDesignDarkForeground}" Height="Auto">
+
                                 <materialDesign:PackIcon Kind="OpenInNew" Width="24" Height="24" RenderTransformOrigin="0.5,0.5">
                                     <materialDesign:PackIcon.RenderTransform>
                                         <TransformGroup>
