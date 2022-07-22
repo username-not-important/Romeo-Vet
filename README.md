@@ -11,6 +11,13 @@ This was a self-funded project developed in 2019, which features:
   - Highlight specific Bone/Part
   - Adjust Rendering options such as Lighting
  
+# Technical Information:
+  - Utilizes **[Helix Toolkit](https://github.com/helix-toolkit/helix-toolkit)** to enable core 3D functionalities
+  - Uses **[SharpDX](https://github.com/sharpdx/SharpDX)** to render through DirectX
+  - Implements MVVM Design Pattern using **[Assisticant](https://github.com/michaellperry/Assisticant)**
+  - Depends of **[WPF Material Design Library](https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit)** for UI/UX Components
+  - Targets .NET Framework 4.5
+ 
 # Screenshots:
  
 ![romeo vet screenshot](https://jeyart.ir/wp-content/uploads/2019/11/Romeo-1.jpg)
